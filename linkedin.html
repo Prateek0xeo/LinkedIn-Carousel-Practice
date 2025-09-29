@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>No-Code Algo Trading LinkedIn Carousel</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #0a0a0a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .carousel-container {
+            width: 100%;
+            max-width: 1080px;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+        
+        .slide {
+            width: 100%;
+            height: 1080px;
+            max-width: 1080px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+        
+        /* Slide 1 - Hook */
+        .slide-1 {
+            background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 40%, #0f2027 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 80px;
+            position: relative;
+        }
+        
+        .slide-1::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse"><path d="M 50 0 L 0 0 0 50" fill="none" stroke="rgba(0,210,255,0.05)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            animation: float 20s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(30px, -30px) rotate(1deg); }
+            66% { transform: translate(-20px, 20px) rotate(-1deg); }
+        }
+        
+        .slide-1 .emoji-icon {
+            font-size: 120px;
+            margin-bottom: 40px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .slide-1 h1 {
+            font-size: 72px;
+            font-weight: 900;
+            text-align: center;
+            line-height: 1.2;
+            margin-bottom: 50px;
+            background: linear-gradient(90deg, #00d2ff, #3a7bd5, #00d2ff);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 3s linear infinite;
+            position: relative;
+            z-index: 1;
+        }
+        
+        @keyframes shine {
+            to { background-position: 200% center; }
+        }
+        
+        .slide-1 .points {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .slide-1 .point {
+            background: rgba(255,255,255,0.05);
+            /* Safari fallback */
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0,210,255,0.3);
+            border-radius: 15px;
+            /* add extra left padding so the arrow/indicator doesn't overlap the text */
+            padding: 30px 30px 30px 90px;
+            font-size: 28px;
+            color: #ffffff;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .slide-1 .point::before {
+            content: '→';
+            position: absolute;
+            /* keep the arrow visually inside the padded area */
+            left: 28px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #00d2ff;
+            font-size: 34px;
+            opacity: 0.95;
+            animation: slide-in 2.2s ease-out infinite;
+        }
+        
+        @keyframes slide-in {
+            0% { left: -50px; opacity: 0; }
+            50% { left: 20px; opacity: 1; }
+            100% { left: -50px; opacity: 0; }
+        }
+        
+        /* swipe indicator removed from markup; related styles cleaned up */
+        
+        /* Slide 2 - Explanation */
+        .slide-2 {
+            background: linear-gradient(180deg, #1e3c72 0%, #2a5298 100%);
+            padding: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .slide-2::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .slide-2 h2 {
+            font-size: 64px;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 60px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .slide-2 .features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .slide-2 .feature {
+            background: rgba(255,255,255,0.1);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 35px;
+            border: 2px solid rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .slide-2 .feature:hover {
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.15);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .slide-2 .feature-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .slide-2 .feature-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #00d2ff;
+            margin-bottom: 15px;
+        }
+        
+        .slide-2 .feature-desc {
+            font-size: 22px;
+            color: rgba(255,255,255,0.9);
+            line-height: 1.4;
+        }
+        
+        .slide-2 .bottom-text {
+            text-align: center;
+            font-size: 32px;
+            color: #00d2ff;
+            font-style: italic;
+            margin-top: 50px;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Slide 3 - Benefits */
+        .slide-3 {
+            background: radial-gradient(ellipse at center, #232526 0%, #414345 100%);
+            padding: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .slide-3::before {
+            content: '🚀';
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            font-size: 400px;
+            opacity: 0.05;
+            transform: rotate(-15deg);
+        }
+        
+        .slide-3 h2 {
+            font-size: 64px;
+            font-weight: 800;
+            margin-bottom: 50px;
+            text-align: center;
+            background: linear-gradient(90deg, #f2994a, #f2c94c);
+            /* -webkit then standard for compatibility */
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .slide-3 .benefits {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        
+        .slide-3 .benefit {
+            display: flex;
+            align-items: center;
+            background: linear-gradient(90deg, rgba(242,153,74,0.1) 0%, rgba(242,201,76,0.1) 100%);
+            border-left: 5px solid #f2994a;
+            padding: 25px 30px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .slide-3 .benefit:hover {
+            transform: translateX(10px);
+            background: linear-gradient(90deg, rgba(242,153,74,0.2) 0%, rgba(242,201,76,0.2) 100%);
+        }
+        
+        .slide-3 .benefit-icon {
+            font-size: 40px;
+            margin-right: 25px;
+            flex-shrink: 0;
+        }
+        
+        .slide-3 .benefit-content {
+            flex: 1;
+        }
+        
+        .slide-3 .benefit-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #f2994a;
+            margin-bottom: 8px;
+        }
+        
+        .slide-3 .benefit-desc {
+            font-size: 22px;
+            color: rgba(255,255,255,0.85);
+        }
+        
+        /* Slide 4 - Platforms */
+        .slide-4 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .slide-4::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                -45deg,
+                rgba(255,255,255,0.01),
+                rgba(255,255,255,0.01) 10px,
+                rgba(255,255,255,0.02) 10px,
+                rgba(255,255,255,0.02) 20px
+            );
+        }
+        
+        .slide-4 h2 {
+            font-size: 60px;
+            font-weight: 800;
+            color: #ffffff;
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .slide-4 .platforms {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .slide-4 .platform {
+            background: rgba(255,255,255,0.15);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            border: 2px solid rgba(255,255,255,0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .slide-4 .platform:hover {
+            background: rgba(255,255,255,0.25);
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .slide-4 .platform-name {
+            font-size: 32px;
+            font-weight: 700;
+            color: #00ff88;
+            margin-bottom: 10px;
+        }
+        
+        .slide-4 .platform-desc {
+            font-size: 20px;
+            color: rgba(255,255,255,0.9);
+            line-height: 1.3;
+        }
+        
+        .slide-4 .platform:nth-child(5) {
+            grid-column: 1 / -1;
+            text-align: center;
+        }
+        
+        .slide-4 .tagline {
+            text-align: center;
+            font-size: 28px;
+            color: #00ff88;
+            font-weight: 600;
+            font-style: italic;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Slide 5 - CTA */
+        .slide-5 {
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            padding: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            /* increase min-height so long headings / multi-line headings fit comfortably */
+            min-height: 1250px;
+        }
+        
+        .slide-5::before {
+            content: '🎯';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 600px;
+            opacity: 0.03;
+        }
+        
+        .slide-5 h2 {
+            font-size: 60px;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 60px;
+            background: linear-gradient(90deg, #00ff88, #00d2ff);
+            /* -webkit then standard for compatibility */
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .slide-5 .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin-bottom: 60px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .slide-5 .step {
+            display: flex;
+            align-items: center;
+            background: rgba(255,255,255,0.05);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px 30px;
+            border: 1px solid rgba(0,255,136,0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .slide-5 .step:hover {
+            background: rgba(255,255,255,0.08);
+            transform: translateX(10px);
+        }
+        
+        .slide-5 .step-number {
+            background: linear-gradient(135deg, #00ff88, #00d2ff);
+            color: #0f2027;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 24px;
+            margin-right: 25px;
+            flex-shrink: 0;
+        }
+        
+        .slide-5 .step-content {
+            flex: 1;
+        }
+        
+        .slide-5 .step-title {
+            font-size: 26px;
+            font-weight: 700;
+            color: #00ff88;
+            margin-bottom: 8px;
+        }
+        
+        .slide-5 .step-desc {
+            font-size: 20px;
+            color: rgba(255,255,255,0.85);
+        }
+        
+        .slide-5 .cta-section {
+            background: linear-gradient(90deg, #00ff88, #00d2ff);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .slide-5 .cta-text {
+            font-size: 28px;
+            color: #0f2027;
+            font-weight: 700;
+            line-height: 1.5;
+        }
+        
+        .slide-5 .cta-question {
+            font-size: 24px;
+            margin-top: 20px;
+            color: #0f2027;
+            font-weight: 600;
+        }
+        
+        /* Navigation */
+        .nav-container {
+            display: flex;
+            gap: 20px;
+            margin-top: 40px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .nav-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102,126,234,0.4);
+        }
+        
+        .download-btn {
+            background: linear-gradient(135deg, #00ff88, #00d2ff);
+            color: #0f2027;
+        }
+        
+        @media screen and (max-width: 1120px) {
+            .slide {
+                transform: scale(0.8);
+                margin: -108px 0;
+            }
+        }
+        
+        @media screen and (max-width: 900px) {
+            .slide {
+                transform: scale(0.6);
+                margin: -216px 0;
+            }
+        }
+        
+        @media screen and (max-width: 680px) {
+            .slide {
+                transform: scale(0.4);
+                margin: -324px 0;
+            }
+        }
+
+        /* Responsive tweaks to avoid overlap on smaller screens */
+        @media screen and (max-width: 900px) {
+            .slide-1 h1 {
+                font-size: 48px;
+                margin-bottom: 30px;
+            }
+
+            .slide-1 .emoji-icon {
+                font-size: 80px;
+                margin-bottom: 20px;
+            }
+
+            .slide-1 .point {
+                padding: 18px 20px 18px 70px;
+                font-size: 20px;
+            }
+
+            .slide-1 .point::before {
+                left: 20px;
+                font-size: 28px;
+            }
+
+            /* swipe indicator removed from markup; no responsive styles needed */
+
+            /* Don't force huge min-height on mobile - let content size adapt */
+            .slide-5 {
+                padding: 40px;
+            }
+
+            .slide-5 h2 {
+                font-size: 40px;
+                margin-bottom: 30px;
+            }
+
+            .slide-5 .step {
+                padding: 18px 16px;
+            }
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            
+            .slide {
+                page-break-after: always;
+                box-shadow: none;
+                margin-bottom: 0;
+            }
+            
+            .nav-container {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="carousel-container">
+        <!-- Slide 1: Hook & Introduction -->
+        <div class="slide slide-1">
+            <div class="emoji-icon">🤖</div>
+            <h1>Think Algo Trading is Only for Programmers?<br>Think Again!</h1>
+            <div class="points">
+                <div class="point">No-code algo trading is revolutionizing how retail traders automate their strategies</div>
+                <div class="point">Build, test & deploy trading algorithms without writing a single line of code</div>
+                <div class="point">Swipe to discover how this game-changing technology works</div>
+            </div>
+        </div>
+        
+        <!-- Slide 2: What is No-Code Algo Trading? -->
+        <div class="slide slide-2">
+            <h2>No-Code Algo Trading Explained 📊</h2>
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">🎨</div>
+                    <div class="feature-title">Visual Strategy Building</div>
+                    <div class="feature-desc">Drag-and-drop interfaces replace complex programming</div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">📚</div>
+                    <div class="feature-title">Pre-built Templates</div>
+                    <div class="feature-desc">Choose from ready-made trading strategies and indicators</div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">⚡</div>
+                    <div class="feature-title">Automated Execution</div>
+                    <div class="feature-desc">Your rules are converted into live trading algorithms</div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🚀</div>
+                    <div class="feature-title">No Programming Required</div>
+                    <div class="feature-desc">Focus on strategy, not syntax</div>
+                </div>
+            </div>
+            <div class="bottom-text">"Turn your trading ideas into automated systems in minutes, not months"</div>
+        </div>
+        
+        <!-- Slide 3: Key Benefits -->
+        <div class="slide slide-3">
+            <h2>Why Traders Are Making the Switch 🚀</h2>
+            <div class="benefits">
+                <div class="benefit">
+                    <div class="benefit-icon">🧠</div>
+                    <div class="benefit-content">
+                        <div class="benefit-title">Eliminates Emotional Trading</div>
+                        <div class="benefit-desc">Algorithms execute based on logic, not fear or greed</div>
+                    </div>
+                </div>
+                <div class="benefit">
+                    <div class="benefit-icon">🌙</div>
+                    <div class="benefit-content">
+                        <div class="benefit-title">24/7 Market Monitoring</div>
+                        <div class="benefit-desc">Never miss an opportunity while you sleep</div>
+                    </div>
+                </div>
+                <div class="benefit">
+                    <div class="benefit-icon">⚡</div>
+                    <div class="benefit-content">
+                        <div class="benefit-title">Lightning-Fast Execution</div>
+                        <div class="benefit-desc">Orders placed instantly when conditions are met</div>
+                    </div>
+                </div>
+                <div class="benefit">
+                    <div class="benefit-icon">📊</div>
+                    <div class="benefit-content">
+                        <div class="benefit-title">Consistent Performance</div>
+                        <div class="benefit-desc">Remove human errors and maintain discipline</div>
+                    </div>
+                </div>
+                <div class="benefit">
+                    <div class="benefit-icon">📈</div>
+                    <div class="benefit-content">
+                        <div class="benefit-title">Scalable Trading</div>
+                        <div class="benefit-desc">Deploy strategies across multiple instruments simultaneously</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 4: Popular Platforms -->
+        <div class="slide slide-4">
+            <h2>Leading No-Code Trading Platforms in 2025 🛠️</h2>
+            <div class="platforms">
+                <div class="platform">
+                    <div class="platform-name">Tradetron</div>
+                    <div class="platform-desc">Visual strategy builder with marketplace</div>
+                </div>
+                <div class="platform">
+                    <div class="platform-name">AlgoTest</div>
+                    <div class="platform-desc">India's #1 platform with paper trading</div>
+                </div>
+                <div class="platform">
+                    <div class="platform-name">SpeedBot</div>
+                    <div class="platform-desc">Built-in bot builder with backtesting</div>
+                </div>
+                <div class="platform">
+                    <div class="platform-name">Share India</div>
+                    <div class="platform-desc">Multi-leg options strategies without coding</div>
+                </div>
+                <div class="platform">
+                    <div class="platform-name">Kuants</div>
+                    <div class="platform-desc">Expression-based format for complex strategies</div>
+                </div>
+            </div>
+            <div class="tagline">"From beginners to professionals - there's a platform for every trader"</div>
+        </div>
+        
+        <!-- Slide 5: Getting Started & CTA -->
+        <div class="slide slide-5">
+            <h2>Ready to Automate Your Trading? Here's How! 🎯</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <div class="step-title">Choose Your Platform</div>
+                        <div class="step-desc">Research no-code trading platforms that suit your needs</div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <div class="step-title">Start with Backtesting</div>
+                        <div class="step-desc">Test strategies on historical data before going live</div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <div class="step-title">Begin Simple</div>
+                        <div class="step-desc">Start with basic strategies and gradually build complexity</div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <div class="step-title">Monitor & Optimize</div>
+                        <div class="step-desc">Continuously refine your automated strategies</div>
+                    </div>
+                </div>
+            </div>
+            <div class="cta-section">
+                <div class="cta-text">Follow for More Trading Insights 🔔</div>
+                <div class="cta-question">Which no-code trading concept interests you most?<br>Share your thoughts in the comments below! 👇</div>
+            </div>
+        </div>
+    </div>
+    
+    
+    
+    <script>
+        // Add intersection observer for slide animations
+        const slides = document.querySelectorAll('.slide');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+        
+        slides.forEach(slide => {
+            slide.style.opacity = '0';
+            slide.style.transform = 'translateY(20px)';
+            slide.style.transition = 'all 0.6s ease';
+            observer.observe(slide);
+        });
+        
+        // Smooth scroll behavior
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
